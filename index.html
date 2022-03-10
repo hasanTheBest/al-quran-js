@@ -7,35 +7,148 @@
     <title>Al Quran</title>
 
     <!-- Bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <!-- custom css -->
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <header class="text-center bg-light p-3">
-      <p class="mb-0"><span class="sura_number-en">114.</span> <span class="sura_name-en">An-Naas</span>, <span class="sura_name-tr_en">Mankind</span></p>
-      <h1><span class="sura_name-ar text_ar">سُورَةُ النَّاسِ</span> <span class="sura_number-ar text_ar">114</span></h1>
-      <p class="text-secondary"><span class="sura_type mb-0">Meccan</span>, Ayahs: <span class="sura_ayahs">6</span></p>
+    <header class="text-center bg-light p-3 sura pb-0">
+      <div class="sura_info">
+        <p class="mb-0">
+          <span class="sura_number-en">114</span>
+          <span class="sura_name-en">An-Naas</span>,
+          <span class="sura_name-tr_en">Mankind</span>
+        </p>
+        <h1>
+          <span class="sura_name-ar text_ar">سُورَةُ النَّاسِ</span>
+          <span class="sura_number-ar text_ar">114</span>
+        </h1>
+        <p class="text-secondary">
+          <span class="sura_type mb-0">Meccan</span>, Ayahs:
+          <span class="sura_ayahs">6</span>
+        </p>
+      </div>
+
+      <!-- sura tools -->
+      <div class="sura_tools d-flex justify-content-center">
+        <div class="sura_tools-previous">
+          <i class="material-icons">skip_previous</i>
+        </div>
+        <div class="sura_tools-playlist">
+          <i class="material-icons">playlist_play</i>
+        </div>
+        <div class="sura_tools-previous">
+          <i class="material-icons">skip_next</i>
+        </div>
+      </div>
+
+      <!-- sura navigation -->
+      <div
+        class="sura_nav d-flex justify-content-between mx-auto p-3 pb-0 sticky-top"
+      >
+        <!-- Index -->
+        <div class="form-floating sura_nav-index">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option value="0" selected class="select_option">1</option>
+            <div class="d-flex align-items-center">
+              <div class="select_option-number">1</div>
+              <div class="select_option-name d-flex flex-column">
+                <h5 class="text_ar">
+                  <span class="name_ar">dfjad</span
+                  ><span class="number_ar">1</span>
+                </h5>
+                <h5 class="text_en">
+                  <span class="name_en">Al Fatiha</span
+                  ><span class="name_tr-en">The opening</span>
+                </h5>
+              </div>
+            </div>
+          </select>
+          <label for="floatingSelect">Sura</label>
+        </div>
+
+        <!-- Translation -->
+        <div class="form-floating sura_nav-translation">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+          </select>
+          <label for="floatingSelect">Works with selects</label>
+        </div>
+
+        <!-- Recitation -->
+        <div class="form-floating sura_nav-recitation">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Open this select menu</option>
+          </select>
+          <label for="floatingSelect">Works with selects</label>
+        </div>
       </div>
     </header>
 
     <main>
       <!-- ayah list -->
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item h1 text-center p-3">
-        بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+      <ul class="list-group list-group-flush list-ayahs">
+        <li class="list-group-item text-center p-3 h1 text_ar">
+          بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
         </li>
-        <li class="list-group-item">
-          <p class="text-end h1"><b class="ayah_text-ar text_ar"><span class="ayah_number-ar">1 </span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</b></p>
-          <p class="ayah_tr-bn text_bn mb-0"><span class="ayah_number-bn">১. </span> পরম করুনাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি</p>
-          <p class="ayah_tr-en text_en mb-0"><span class="ayah_number-en">1. </span>In the name of Allah, the merciful, the most merciful</p>
+
+        <li class="list-group-item ayah">
+          <div class="ayah_tools d-flex">
+            <div class="ayah_tools-play">
+              <i class="material-icons">play_circle</i>
+            </div>
+            <div class="ayah_tools-pause">
+              <i class="material-icons">stop_circle</i>
+            </div>
+          </div>
+
+          <!-- <small class="ayah_meta"><span class="ayah_meta-number"></span></small> -->
+          <p class="text-end h1">
+            <b class="ayah_text-ar text_ar"
+              ><span class="ayah_number-ar">1 </span>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ
+              ٱلرَّحِيمِ</b
+            >
+          </p>
+          <p class="ayah_tr-bn text_bn mb-0">
+            <span class="ayah_number-bn">১. </span> পরম করুনাময় অসীম দয়ালু
+            আল্লাহর নামে শুরু করছি
+          </p>
+          <p class="ayah_tr-en text_en mb-0">
+            <span class="ayah_number-en">1. </span>In the name of Allah, the
+            merciful, the most merciful
+          </p>
         </li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
       </ul>
     </main>
-    <footer class="text-center">&copy; Mahmud, 2022 | All rights reserved</footer>
+    <footer class="text-center">
+      &copy; Mahmud, 2022 | All rights reserved
+    </footer>
+
+    <!-- script -->
+    <script src="./js/app.js"></script>
   </body>
 </html>

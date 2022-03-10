@@ -1,3 +1,16 @@
+@font-face {
+  font-family: me_quran;
+  src: url("/fonts/Uthmanic-Hafs.woff2");
+}
+
+.text_ar {
+  font-family: me_quran;
+}
+
+.sura_nav {
+  max-width: 765px;
+}
+
 main {
   max-width: 765px;
   margin: 2rem auto;

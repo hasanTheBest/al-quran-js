@@ -1,5 +1,22 @@
+// font face
+@font-face {
+  font-family: me_quran;
+  src: url("/fonts/Uthmanic-Hafs.woff2");
+}
+
+// text arabic
+.text_ar {
+  font-family: me_quran;
+}
+
+// ======== header ==========
+.sura_nav {
+  max-width: 765px;
+}
 // ======= main ======
 main {
   max-width: 765px;
   margin: 2rem auto;
 }
+
+// ayah

@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'noorehidayat';
+    src: local('noorehidayat'),
+        url('noorehidayat.woff2') format('woff2'),
+        url('noorehidayat.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
