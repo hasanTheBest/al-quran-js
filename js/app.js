@@ -1962,8 +1962,76 @@ const languageList = [
   "uz",
 ];
 
-const API_URL =
-  "https://api.alquran.cloud/v1/surah/sura_id/editions/quran-uthmani";
+const transList = [
+  {
+    number: 6231,
+    text: 'Say, "I seek refuge in the Lord of mankind,',
+    numberInSurah: 1,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6232,
+    text: "The Sovereign of mankind.",
+    numberInSurah: 2,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6233,
+    text: "The God of mankind,",
+    numberInSurah: 3,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6234,
+    text: "From the evil of the retreating whisperer -",
+    numberInSurah: 4,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6235,
+    text: "Who whispers [evil] into the breasts of mankind -",
+    numberInSurah: 5,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6236,
+    text: 'From among the jinn and mankind."',
+    numberInSurah: 6,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+];
+
+const API_URL = "https://api.alquran.cloud/v1/surah/";
 
 // =========== Event listener ============
 document.addEventListener("DOMContentLoaded", () => {
@@ -1985,12 +2053,20 @@ select(".select_sura-index").addEventListener("change", (e) => {
   loadSura(value);
 });
 
+// change translation
+select(".select_sura-translations").addEventListener("change", (e) => {
+  const { value } = e.target;
+
+  // load sura
+  loadTranslation(value);
+});
+
 // load sura
 async function loadSura(id) {
   // fetch to load sura;
   let res;
   try {
-    const resPromise = await fetch(API_URL.replace("sura_id", id));
+    const resPromise = await fetch(API_URL + id + "/editions/quran-uthmani");
     res = await resPromise.json();
 
     if (res.code === 200 && res.status === "OK") {
@@ -2002,6 +2078,24 @@ async function loadSura(id) {
 
   // display sura
   displaySura(sura114[0]);
+}
+
+// load translation
+async function loadTranslation(identifier) {
+  const sura = select(".sura_number-en").textContent;
+
+  let res;
+  try {
+    const resPromise = await fetch(API_URL + sura + "/" + identifier);
+    res = await resPromise.json();
+
+    if (res.code === 200 && res.status === "OK") {
+      displaySuraTranslation(res.data.ayahs, identifier.split(".")[0]);
+      // displaySuraTranslation(transList, identifier.split(".")[0]);
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 // Display sura
@@ -2076,7 +2170,7 @@ function displayAyahs(ayahs) {
   select(".list-ayahs").innerHTML = verses.join("");
 }
 
-// Sura Index
+// Display sura Index
 function displaySuraIndex(suraList) {
   const options = suraList
     .map(
@@ -2090,7 +2184,7 @@ function displaySuraIndex(suraList) {
   setValue(".select_sura-index", options);
 }
 
-// translation list
+// Display translation list
 function displayTranslation(translations) {
   const transObj = translations
     .filter((item) => item.format !== "audio")
@@ -2125,6 +2219,19 @@ function displayTranslation(translations) {
   });
 
   setValue(".select_sura-translations", trans.join(""));
+}
+
+// Display Sura Translation
+function displaySuraTranslation(ayahs, locale) {
+  const verses = select(".list-ayahs").children;
+  for (let i = 0; i < verses.length; i++) {
+    verses[i].children[1].innerHTML += `<p class="ayah_tr-bn text_bn mb-0">
+            <span class="ayah_number-bn">${ayahs[
+              i
+            ].numberInSurah.toLocaleString(locale)} </span> 
+            ${ayahs[i].text}
+          </p>`;
+  }
 }
 
 // set value

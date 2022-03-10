@@ -15,4 +15,10 @@ main {
   max-width: 765px;
   margin: 2rem auto;
 }
+
+.ayah_text {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
 /*# sourceMappingURL=app.css.map */
