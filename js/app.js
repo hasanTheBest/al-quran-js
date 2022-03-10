@@ -1001,18 +1001,40 @@ const suraList = [
   },
 ];
 
+const API_URL =
+  "https://api.alquran.cloud/v1/surah/sura_id/editions/quran-uthmani";
+
 // =========== Event listener ============
 document.addEventListener("DOMContentLoaded", () => {
   // load sura
-  loadSura(114);
+  loadSura(1);
 
   // set index
   displaySuraIndex(suraList);
 });
 
+// change sura
+select(".select_sura-index").addEventListener("change", (e) => {
+  const { value } = e.target;
+
+  // load sura
+  loadSura(value);
+});
+
 // load sura
-function loadSura(id) {
+async function loadSura(id) {
   // fetch to load sura;
+  let res;
+  try {
+    const resPromise = await fetch(API_URL.replace("sura_id", id));
+    res = await resPromise.json();
+
+    if (res.code === 200 && res.status === "OK") {
+      // displaySura(res.data[0]);
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
 
   // display sura
   displaySura(sura114[0]);
@@ -1063,20 +1085,9 @@ function displaySuraInfo({
 
 // Display Ayahs
 function displayAyahs(ayahs) {
-  // const listItems = ayahs.map(({ text, numberInSurah }, i) => {
-
-  const ayahList = select(".list-ayahs");
-
-  ayahs.forEach(({ text, numberInSurah }, i) => {
-    const li = create("li");
-    li.classList.add(
-      "list-group-item",
-      "ayah",
-      "d-flex",
-      "justify-content-between"
-    );
-
-    const ayah = `
+  const verses = ayahs.map(({ text, numberInSurah }, i) => {
+    return `
+    <li class="list-group-item ayah d-flex justify-content-between">
       <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
         <div class="ayah_tools-play">
           <i class="material-icons">play_circle</i>
@@ -1093,18 +1104,26 @@ function displayAyahs(ayahs) {
           </b>
         </p>
       </div>
+      </li>
     `;
-
-    li.innerHTML = ayah;
-    ayahList.appendChild(li);
   });
 
-  // setValue(".list-ayahs", listItems.join(""));
+  // add markup to the list
+  select(".list-ayahs").innerHTML = verses.join("");
 }
 
 // Sura Index
 function displaySuraIndex(suraList) {
-  console.log(suraList);
+  const options = suraList
+    .map(
+      ({ englishName, number, name }, i) =>
+        `<option class="h4" value="${number}" ${
+          i === 0 && "selected"
+        }>${number}. ${englishName} - ${name}</option>`
+    )
+    .join("");
+
+  setValue(".select_sura-index", options);
 }
 
 // set value
