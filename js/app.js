@@ -2070,14 +2070,14 @@ async function loadSura(id) {
     res = await resPromise.json();
 
     if (res.code === 200 && res.status === "OK") {
-      // displaySura(res.data[0]);
+      displaySura(res.data[0]);
     }
   } catch (err) {
     console.log(err.message);
   }
 
   // display sura
-  displaySura(sura114[0]);
+  // displaySura(sura114[0]);
 }
 
 // load translation
