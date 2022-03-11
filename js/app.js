@@ -2031,6 +2031,312 @@ const transList = [
   },
 ];
 
+const reciterList = [
+  {
+    identifier: "ar.abdullahbasfar",
+    language: "ar",
+    name: "عبد الله بصفر",
+    englishName: "Abdullah Basfar",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.abdurrahmaansudais",
+    language: "ar",
+    name: "عبدالرحمن السديس",
+    englishName: "Abdurrahmaan As-Sudais",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.abdulsamad",
+    language: "ar",
+    name: "عبدالباسط عبدالصمد",
+    englishName: "Abdul Samad",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.shaatree",
+    language: "ar",
+    name: "أبو بكر الشاطري",
+    englishName: "Abu Bakr Ash-Shaatree",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.ahmedajamy",
+    language: "ar",
+    name: "أحمد بن علي العجمي",
+    englishName: "Ahmed ibn Ali al-Ajamy",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.alafasy",
+    language: "ar",
+    name: "مشاري العفاسي",
+    englishName: "Alafasy",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.hanirifai",
+    language: "ar",
+    name: "هاني الرفاعي",
+    englishName: "Hani Rifai",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.husary",
+    language: "ar",
+    name: "محمود خليل الحصري",
+    englishName: "Husary",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.husarymujawwad",
+    language: "ar",
+    name: "محمود خليل الحصري (المجود)",
+    englishName: "Husary (Mujawwad)",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.hudhaify",
+    language: "ar",
+    name: "علي بن عبدالرحمن الحذيفي",
+    englishName: "Hudhaify",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.ibrahimakhbar",
+    language: "ar",
+    name: "إبراهيم الأخضر",
+    englishName: "Ibrahim Akhdar",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.mahermuaiqly",
+    language: "ar",
+    name: "ماهر المعيقلي",
+    englishName: "Maher Al Muaiqly",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.muhammadayyoub",
+    language: "ar",
+    name: "محمد أيوب",
+    englishName: "Muhammad Ayyoub",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.muhammadjibreel",
+    language: "ar",
+    name: "محمد جبريل",
+    englishName: "Muhammad Jibreel",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.saoodshuraym",
+    language: "ar",
+    name: "سعود الشريم",
+    englishName: "Saood bin Ibraaheem Ash-Shuraym",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "en.walk",
+    language: "en",
+    name: "Ibrahim Walk",
+    englishName: "Ibrahim Walk",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.parhizgar",
+    language: "ar",
+    name: "شهریار پرهیزگار",
+    englishName: "Parhizgar",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ur.khan",
+    language: "ur",
+    name: "Shamshad Ali Khan",
+    englishName: "Shamshad Ali Khan",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "zh.chinese",
+    language: "zh",
+    name: "中文",
+    englishName: "Chinese",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "fr.leclerc",
+    language: "fr",
+    name: "Youssouf Leclerc",
+    englishName: "Youssouf Leclerc",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ar.aymanswoaid",
+    language: "ar",
+    name: "أيمن سويد",
+    englishName: "Ayman Sowaid",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+  {
+    identifier: "ru.kuliev-audio",
+    language: "ru",
+    name: "Elmir Kuliev by 1MuslimApp",
+    englishName: "Elmir Kuliev by 1MuslimApp",
+    format: "audio",
+    type: "versebyverse",
+    direction: null,
+  },
+];
+
+const sura114Recitation = [
+  {
+    number: 6231,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6231.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6231.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6231.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6231.mp3",
+    ],
+    text: "\u0628\u0650\u0633\u0652\u0645\u0650 \u0671\u0644\u0644\u0651\u064e\u0647\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0670\u0646\u0650 \u0671\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650 \u0642\u064f\u0644\u0652 \u0623\u064e\u0639\u064f\u0648\u0630\u064f \u0628\u0650\u0631\u064e\u0628\u0651\u0650 \u0671\u0644\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 1,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6232,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6232.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6232.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6232.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6232.mp3",
+    ],
+    text: "\u0645\u064e\u0644\u0650\u0643\u0650 \u0671\u0644\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 2,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6233,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6233.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6233.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6233.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6233.mp3",
+    ],
+    text: "\u0625\u0650\u0644\u064e\u0670\u0647\u0650 \u0671\u0644\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 3,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6234,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6234.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6234.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6234.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6234.mp3",
+    ],
+    text: "\u0645\u0650\u0646 \u0634\u064e\u0631\u0651\u0650 \u0671\u0644\u0652\u0648\u064e\u0633\u0652\u0648\u064e\u0627\u0633\u0650 \u0671\u0644\u0652\u062e\u064e\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 4,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6235,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6235.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6235.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6235.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6235.mp3",
+    ],
+    text: "\u0671\u0644\u0651\u064e\u0630\u0650\u0649 \u064a\u064f\u0648\u064e\u0633\u0652\u0648\u0650\u0633\u064f \u0641\u0650\u0649 \u0635\u064f\u062f\u064f\u0648\u0631\u0650 \u0671\u0644\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 5,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+  {
+    number: 6236,
+    audio: "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6236.mp3",
+    audioSecondary: [
+      "https://cdn2.islamic.network/quran/audio/128/ar.alafasy/6236.mp3",
+      "https://cdn.islamic.network/quran/audio/64/ar.alafasy/6236.mp3",
+      "https://cdn2.islamic.network/quran/audio/64/ar.alafasy/6236.mp3",
+    ],
+    text: "\u0645\u0650\u0646\u064e \u0671\u0644\u0652\u062c\u0650\u0646\u0651\u064e\u0629\u0650 \u0648\u064e\u0671\u0644\u0646\u0651\u064e\u0627\u0633\u0650",
+    numberInSurah: 6,
+    juz: 30,
+    manzil: 7,
+    page: 604,
+    ruku: 556,
+    hizbQuarter: 240,
+    sajda: false,
+  },
+];
+
 const API_URL = "https://api.alquran.cloud/v1/surah/";
 
 // =========== Event listener ============
@@ -2043,6 +2349,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // display translation list
   displayTranslation(translationList);
+
+  // display reciter list
+  displayReciterList(reciterList);
 });
 
 // change sura
@@ -2059,6 +2368,26 @@ select(".select_sura-translations").addEventListener("change", (e) => {
 
   // load sura
   loadTranslation(value);
+});
+
+// change recitation
+select(".select_sura-recitation").addEventListener("change", (e) => {
+  const { value } = e.target;
+
+  // load sura
+  loadRecitation(value);
+});
+
+// click to listen ayah
+select(".list-ayahs").addEventListener("click", (e) => {
+  e.stopImmediatePropagation();
+
+  if (
+    e.target.textContent.includes("play_circle") &&
+    e.target.nextElementSibling
+  ) {
+    e.target.nextElementSibling.play();
+  }
 });
 
 // load sura
@@ -2091,83 +2420,31 @@ async function loadTranslation(identifier) {
 
     if (res.code === 200 && res.status === "OK") {
       displaySuraTranslation(res.data.ayahs, identifier.split(".")[0]);
-      // displaySuraTranslation(transList, identifier.split(".")[0]);
     }
   } catch (err) {
     console.log(err.message);
   }
+
+  // displaySuraTranslation(transList, identifier.split(".")[0]);
 }
 
-// Display sura
-function displaySura(sura) {
-  // display sura info
-  const {
-    number,
-    name,
-    englishName,
-    englishNameTranslation,
-    revelationType,
-    numberOfAyahs,
-  } = sura;
+// load reciation
+async function loadRecitation(identifier) {
+  const sura = select(".sura_number-en").textContent;
 
-  displaySuraInfo({
-    number,
-    name,
-    englishName,
-    englishNameTranslation,
-    revelationType,
-    numberOfAyahs,
-  });
+  let res;
+  try {
+    const resPromise = await fetch(API_URL + sura + "/" + identifier);
+    res = await resPromise.json();
 
-  // display ayahs
-  displayAyahs(sura.ayahs);
-}
+    if (res.code === 200 && res.status === "OK") {
+      attachRecitation(res.data.ayahs);
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
 
-// Display sura info
-function displaySuraInfo({
-  number,
-  name,
-  englishName,
-  englishNameTranslation,
-  revelationType,
-  numberOfAyahs,
-}) {
-  setValue(".sura_number-en", number, "textContent");
-  setValue(".sura_name-en", englishName, "textContent");
-  setValue(".sura_name-tr_en", englishNameTranslation, "textContent");
-  setValue(".sura_name-ar", name, "textContent");
-  setValue(".sura_number-ar", number.toLocaleString("ar-EG"), "textContent");
-  setValue(".sura_type", revelationType, "textContent");
-  setValue(".sura_ayahs", numberOfAyahs, "textContent");
-}
-
-// Display Ayahs
-function displayAyahs(ayahs) {
-  const verses = ayahs.map(({ text, numberInSurah }, i) => {
-    return `
-    <li class="list-group-item ayah d-flex justify-content-between">
-      <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
-        <div class="ayah_tools-play">
-          <i class="material-icons">play_circle</i>
-        </div>
-      </div>
-
-      <div class="ayah_text">
-        <p class="text-end h1">
-          <b class="ayah_text-ar text_ar">
-          ${i === 0 ? text.slice(39) : text} 
-          <span class="ayah_number-ar">${numberInSurah.toLocaleString(
-            "ar-EG"
-          )} </span>
-          </b>
-        </p>
-      </div>
-      </li>
-    `;
-  });
-
-  // add markup to the list
-  select(".list-ayahs").innerHTML = verses.join("");
+  // attachRecitation(sura114Recitation);
 }
 
 // Display sura Index
@@ -2221,6 +2498,87 @@ function displayTranslation(translations) {
   setValue(".select_sura-translations", trans.join(""));
 }
 
+// Display reciter list
+function displayReciterList(reciters) {
+  select(".select_sura-recitation").innerHTML = reciters
+    .map(({ identifier, name, englishName }) => {
+      return `<option value="${identifier}">${englishName} - ${name}</option>`;
+    })
+    .join("");
+}
+
+// Display sura
+function displaySura(sura) {
+  // display sura info
+  const {
+    number,
+    name,
+    englishName,
+    englishNameTranslation,
+    revelationType,
+    numberOfAyahs,
+  } = sura;
+
+  displaySuraInfo({
+    number,
+    name,
+    englishName,
+    englishNameTranslation,
+    revelationType,
+    numberOfAyahs,
+  });
+
+  // Display sura info
+  function displaySuraInfo({
+    number,
+    name,
+    englishName,
+    englishNameTranslation,
+    revelationType,
+    numberOfAyahs,
+  }) {
+    setValue(".sura_number-en", number, "textContent");
+    setValue(".sura_name-en", englishName, "textContent");
+    setValue(".sura_name-tr_en", englishNameTranslation, "textContent");
+    setValue(".sura_name-ar", name, "textContent");
+    setValue(".sura_number-ar", number.toLocaleString("ar-EG"), "textContent");
+    setValue(".sura_type", revelationType, "textContent");
+    setValue(".sura_ayahs", numberOfAyahs, "textContent");
+  }
+
+  // display ayahs
+  displayAyahs(sura.ayahs);
+}
+
+// Display Ayahs
+function displayAyahs(ayahs) {
+  const verses = ayahs.map(({ text, numberInSurah }, i) => {
+    return `
+    <li class="list-group-item ayah d-flex justify-content-between">
+      <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
+        <div class="ayah_tools-play">
+          <i class="material-icons">play_circle</i>
+        </div>
+      </div>
+
+      <div class="ayah_text">
+        <p class="text-end h1">
+          <b class="ayah_text-ar text_ar">
+          ${i === 0 ? text.slice(39) : text} 
+          <span class="ayah_number-ar">${numberInSurah.toLocaleString(
+            "ar-EG"
+          )} </span>
+          </b>
+        </p>
+      </div>
+      </li>
+    `;
+  });
+
+  // add markup to the list
+  select(".list-ayahs").innerHTML = verses.join("");
+}
+
 // Display Sura Translation
 function displaySuraTranslation(ayahs, locale) {
   const verses = select(".list-ayahs").children;
@@ -2231,6 +2589,21 @@ function displaySuraTranslation(ayahs, locale) {
             ].numberInSurah.toLocaleString(locale)} </span> 
             ${ayahs[i].text}
           </p>`;
+  }
+}
+
+// Attach Sura recitation
+function attachRecitation(ayahs) {
+  const verses = select(".list-ayahs").children;
+
+  for (let i = 0; i < verses.length; i++) {
+    const playButton = verses[i].firstElementChild.firstElementChild;
+
+    if (playButton.childElementCount > 1) {
+      playButton.children[1].src = ayahs[i]["audio"];
+    } else {
+      playButton.innerHTML += `<audio src="${ayahs[i]["audio"]}"></audio>`;
+    }
   }
 }
 
