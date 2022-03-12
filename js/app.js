@@ -2519,6 +2519,8 @@ function displaySura(sura) {
     numberOfAyahs,
   } = sura;
 
+  shouldDisplayBismillah(number);
+
   displaySuraInfo({
     number,
     name,
@@ -2527,6 +2529,13 @@ function displaySura(sura) {
     revelationType,
     numberOfAyahs,
   });
+
+  // Omit bismill
+  function shouldDisplayBismillah(suraNo) {
+    const bismillah = select(".heading-bismillah");
+    if (suraNo === 1 || suraNo === 9) bismillah.classList.add("d-none");
+    else bismillah.classList.remove("d-none");
+  }
 
   // Display sura info
   function displaySuraInfo({
@@ -2547,12 +2556,12 @@ function displaySura(sura) {
   }
 
   // display ayahs
-  displayAyahs(sura.ayahs);
+  displayAyahs(sura.ayahs, number);
 }
 
 // Display Ayahs
-function displayAyahs(ayahs) {
-  const verses = ayahs.map(({ text, numberInSurah }, i) => {
+function displayAyahs(ayahs, suraNo) {
+  const verses = ayahs.map(({ text, numberInSurah }) => {
     return `
     <li class="list-group-item ayah d-flex justify-content-between">
       <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
@@ -2562,14 +2571,18 @@ function displayAyahs(ayahs) {
       </div>
 
       <div class="ayah_text">
-        <p class="text-end h1">
+        <div class="text-end h2">
           <b class="ayah_text-ar text_ar">
-          ${i === 0 ? text.slice(39) : text} 
+          ${
+            numberInSurah === 1 && suraNo !== 1 && suraNo !== 9
+              ? text.slice(39)
+              : text
+          } 
           <span class="ayah_number-ar">${numberInSurah.toLocaleString(
             "ar-EG"
           )} </span>
           </b>
-        </p>
+        </div>
       </div>
       </li>
     `;
