@@ -2391,9 +2391,9 @@ select(".list-ayahs").addEventListener("click", (e) => {
 });
 
 // load sura
-async function loadSura(id) {
+function loadSura(id) {
   // fetch to load sura;
-  let res;
+  /* let res;
   try {
     const resPromise = await fetch(API_URL + id + "/editions/quran-uthmani");
     res = await resPromise.json();
@@ -2403,36 +2403,41 @@ async function loadSura(id) {
     }
   } catch (err) {
     console.log(err.message);
-  }
+  } */
 
   // display sura
-  // displaySura(sura114[0]);
+  displaySura(sura114[0]);
+  // displaySura(fetchData(id)[0]);
 }
 
 // load translation
-async function loadTranslation(identifier) {
+function loadTranslation(identifier) {
   const sura = select(".sura_number-en").textContent;
 
-  let res;
-  try {
-    const resPromise = await fetch(API_URL + sura + "/" + identifier);
-    res = await resPromise.json();
+  // displaySuraTranslation(fetchData(sura, identifier), identifier.split("."))
+  displaySuraTranslation(transList, identifier.split(".")[0]);
 
-    if (res.code === 200 && res.status === "OK") {
-      displaySuraTranslation(res.data.ayahs, identifier.split(".")[0]);
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
+  // let res;
+  // try {
+  //   const resPromise = await fetch(API_URL + sura + "/" + identifier);
+  //   res = await resPromise.json();
 
-  // displaySuraTranslation(transList, identifier.split(".")[0]);
+  //   if (res.code === 200 && res.status === "OK") {
+  //     displaySuraTranslation(res.data.ayahs, identifier.split(".")[0]);
+  //   }
+  // } catch (err) {
+  //   console.log(err.message);
+  // }
 }
 
 // load reciation
-async function loadRecitation(identifier) {
+function loadRecitation(identifier) {
   const sura = select(".sura_number-en").textContent;
 
-  let res;
+  // attachRecitation(fetchData(sura, identifier))
+  attachRecitation(sura114Recitation);
+
+  /*   let res;
   try {
     const resPromise = await fetch(API_URL + sura + "/" + identifier);
     res = await resPromise.json();
@@ -2442,9 +2447,25 @@ async function loadRecitation(identifier) {
     }
   } catch (err) {
     console.log(err.message);
+  } */
+}
+
+// fetch data
+async function fetchData(id, identifier = "editions/quran-uthmani") {
+  let data;
+  try {
+    const resPromise = await fetch(API_URL + id + "/" + identifier);
+    let res = await resPromise.json();
+
+    if (res.code === 200 && res.status === "OK") {
+      data = res;
+    }
+  } catch (err) {
+    data = err.message;
+    console.log(err.message);
   }
 
-  // attachRecitation(sura114Recitation);
+  return data;
 }
 
 // Display sura Index
