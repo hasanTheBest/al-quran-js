@@ -2659,12 +2659,24 @@ function select(selector) {
 // ======== Play batch audio =========
 select(".sura_tools-playlist").addEventListener("click", (e) => {
   if (e.target.textContent === "playlist_play") {
-    playAllAyahs(sura114Recitation);
+    playAllAyahs(sura114Recitation.map(({ audio }) => new Audio(audio)));
   }
 });
 
+let ai = 0;
+function playAllAyahs(audios) {
+  audios[ai].play();
+
+  if (ai < audios.length - 1) {
+    audios[ai].addEventListener("ended", () => {
+      ai++;
+      playAllAyahs(audios);
+    });
+  }
+}
+
 // Play all ayahs
-function playAllAyahs(ayahs) {
+/* function playAllAyahs(ayahs) {
   console.log("playAllAyahs", ayahs);
 
   let verse = 0,
@@ -2674,18 +2686,29 @@ function playAllAyahs(ayahs) {
   verseAudio = new Audio(ayahs[verse]["audio"]);
   verseAudio.play();
 
-  verseAudio.addEventListener(
-    "ended",
-    function () {
-      for (let i = 1; i < ayahs.length; i++) {
-        verseAudio = new Audio(ayahs[i]["audio"]);
+  verseAudio.addEventListener("ended", () => {
+    if (verse < ayahs.length) {
+      verseAudio = new Audio(ayahs[verse]["audio"]);
+      verseAudio.play();
+      verse++;
+    }
+  });
+} */
+// }
 
-        setTimeout(() => {
-          verseAudio.play();
-        }, +verseAudio.duration * 1000);
-      }
-    },
-    false
-  );
-}
+// function playAllAyahs(audios) {
+//   let ai = 0;
+//   // audios.forEach((audio) => await audio.play());
+
+//   playSingleTrack(audios[ai], ai);
+//   // audios[ai].addEventListener("ended", () => {
+//   //   ai++;
+//   // })
+// }
+
+// function playSingleTrack(track, ai) {
+//   track.play();
+//   track.addEventListener("ended", () => {
+//     playSingleTrack(audios[++ai], ++ai);
+//   });
 // }
