@@ -2655,3 +2655,37 @@ function create(element) {
 function select(selector) {
   return document.querySelector(selector);
 }
+
+// ======== Play batch audio =========
+select(".sura_tools-playlist").addEventListener("click", (e) => {
+  if (e.target.textContent === "playlist_play") {
+    playAllAyahs(sura114Recitation);
+  }
+});
+
+// Play all ayahs
+function playAllAyahs(ayahs) {
+  console.log("playAllAyahs", ayahs);
+
+  let verse = 0,
+    verseAudio;
+
+  // if (verse < ayahs.length) {
+  verseAudio = new Audio(ayahs[verse]["audio"]);
+  verseAudio.play();
+
+  verseAudio.addEventListener(
+    "ended",
+    function () {
+      for (let i = 1; i < ayahs.length; i++) {
+        verseAudio = new Audio(ayahs[i]["audio"]);
+
+        setTimeout(() => {
+          verseAudio.play();
+        }, +verseAudio.duration * 1000);
+      }
+    },
+    false
+  );
+}
+// }
