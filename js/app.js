@@ -2665,12 +2665,28 @@ select(".sura_tools-playlist").addEventListener("click", (e) => {
 
 let ai = 0;
 function playAllAyahs(audios) {
+  // highligth playing ahah bg
+  select(".list-ayahs").children[ai].style.backgroundColor =
+    "rgba(0, 0, 0, .1)";
+  window.scrollTo(0, select(".list-ayahs").children[ai].offsetTop);
+
+  // play ayah
   audios[ai].play();
 
   if (ai < audios.length - 1) {
     audios[ai].addEventListener("ended", () => {
+      select(".list-ayahs").children[ai].style.backgroundColor = "inherit";
+
       ai++;
       playAllAyahs(audios);
+    });
+  }
+
+  if (ai === audios.length - 1) {
+    audios[audios.length - 1].addEventListener("ended", () => {
+      console.log("ended");
+      select(".list-ayahs").lastElementChild.style.backgroundColor = "inherit";
+      ai = 0;
     });
   }
 }
