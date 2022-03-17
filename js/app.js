@@ -2379,14 +2379,51 @@ select(".select_sura-recitation").addEventListener("change", (e) => {
 });
 
 // click to listen ayah
-select(".list-ayahs").addEventListener("click", (e) => {
+select(".list-ayahs").addEventListener("click", async (e) => {
   e.stopImmediatePropagation();
 
-  if (
-    e.target.textContent.includes("play_circle") &&
-    e.target.nextElementSibling
-  ) {
-    e.target.nextElementSibling.play();
+  if (e.target.textContent.includes("play_circle")) {
+    const that = e.target;
+
+    that.textContent = "pending";
+    that.parentElement.parentElement.parentElement.classList.add("bg-light");
+
+    const ayahInSurah = e.target.parentElement.parentElement.parentElement.id;
+
+    const data = await fetchData(
+      ayahInSurah,
+      select(".select_sura-recitation")["value"]
+    );
+
+    if (data.hasOwnProperty("audio")) {
+      const audio = new Audio(data.audio);
+
+      audio.play();
+      that.textContent = "pause";
+      that.classList.add("text-success");
+
+      audio.addEventListener("playing", () => {
+        that.addEventListener("click", () => {
+          audio.pause();
+          that.textContent = "play_arrow";
+        });
+      });
+
+      audio.addEventListener("pause", () => {
+        that.addEventListener("click", () => {
+          audio.play();
+          that.textContent = "pause";
+        });
+      });
+
+      audio.addEventListener("ended", () => {
+        that.textContent = "play_circle";
+        that.classList.remove("text-success");
+        that.parentElement.parentElement.parentElement.classList.remove(
+          "bg-light"
+        );
+      });
+    }
   }
 });
 
@@ -2452,20 +2489,19 @@ function loadRecitation(identifier) {
 
 // fetch data
 async function fetchData(id, identifier = "editions/quran-uthmani") {
-  let data;
+  const url = id.includes(":") ? API_URL.replace("surah", "ayah") : API_URL;
+
   try {
-    const resPromise = await fetch(API_URL + id + "/" + identifier);
+    const resPromise = await fetch(url + id + "/" + identifier);
     let res = await resPromise.json();
 
     if (res.code === 200 && res.status === "OK") {
-      data = res;
+      return res.data;
     }
   } catch (err) {
-    data = err.message;
+    return err.message;
     console.log(err.message);
   }
-
-  return data;
 }
 
 // Display sura Index
@@ -2584,7 +2620,9 @@ function displaySura(sura) {
 function displayAyahs(ayahs, suraNo) {
   const verses = ayahs.map(({ text, numberInSurah }) => {
     return `
-    <li class="list-group-item ayah d-flex justify-content-between">
+    <li class="list-group-item ayah d-flex justify-content-between" id=${
+      suraNo + ":" + numberInSurah
+    }>
       <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
         <div class="ayah_tools-play">
           <i class="material-icons">play_circle</i>
