@@ -2378,12 +2378,16 @@ select(".select_sura-recitation").addEventListener("change", (e) => {
   loadRecitation(value);
 });
 
+let playNow = null;
 // click to listen ayah
 select(".list-ayahs").addEventListener("click", async (e) => {
   e.stopImmediatePropagation();
 
   if (e.target.textContent.includes("play_circle")) {
     const that = e.target;
+
+    // stop prev play
+    playNow !== null && playNow.pause();
 
     that.textContent = "pending";
     that.parentElement.parentElement.parentElement.classList.add("bg-light");
@@ -2403,6 +2407,8 @@ select(".list-ayahs").addEventListener("click", async (e) => {
       that.classList.add("text-success");
 
       audio.addEventListener("playing", () => {
+        playNow = audio;
+
         that.addEventListener("click", () => {
           audio.pause();
           that.textContent = "play_arrow";
@@ -2710,6 +2716,7 @@ function playAllAyahs(audios) {
 
   // play ayah
   audios[ai].play();
+  playNow = audios[ai];
 
   if (ai < audios.length - 1) {
     audios[ai].addEventListener("ended", () => {
@@ -2722,7 +2729,6 @@ function playAllAyahs(audios) {
 
   if (ai === audios.length - 1) {
     audios[audios.length - 1].addEventListener("ended", () => {
-      console.log("ended");
       select(".list-ayahs").lastElementChild.style.backgroundColor = "inherit";
       ai = 0;
     });
