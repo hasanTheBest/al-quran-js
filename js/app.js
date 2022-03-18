@@ -2709,7 +2709,7 @@ select(".sura_tools-playlist").addEventListener("click", (e) => {
 
 let ai = 0;
 function playAllAyahs(audios) {
-  // highligth playing ahah bg
+  // highligth playing ahah bg dfds
   select(".list-ayahs").children[ai].style.backgroundColor =
     "rgba(0, 0, 0, .1)";
   window.scrollTo(0, select(".list-ayahs").children[ai].offsetTop);
