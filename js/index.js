@@ -2700,6 +2700,91 @@ function select(selector) {
   return document.querySelector(selector);
 }
 
+// ========== Player Class ==============
+class Player {
+  constructor(playlist) {
+    this.playlist = playlist;
+    this.index = 0;
+  }
+
+  // 1. Play Method
+  play(id) {
+    const index = typeof id === "number" ? id : this.index;
+    let audio;
+
+    // if the file already added
+    const sound = this.playlist[index];
+    if (sound.listen) {
+      audio = sound.listen;
+    } else {
+      audio = sound.listen = new Howl({
+        src: sound.src,
+        html5: true,
+        onload: () => {
+          select(".operation_btn-loading").classList.remove("d-none");
+        },
+        onplay: () => {
+          select(".operation_btn-loading").classList.add("d-none");
+          select(".operation_btn-pause").classList.remove("d-none");
+          select(".operation_btn-play").classList.add("d-none");
+        },
+        onpause: () => {
+          select(".operation_btn-pause").classList.add("d-none");
+          select(".operation_btn-play").classList.remove("d-none");
+        },
+        onend: () => {
+          this.skip("next");
+        },
+      });
+    }
+
+    // begin playing audio
+    audio.play();
+
+    // set currenty playing index
+    this.index = index;
+  }
+
+  // 2. skip Method
+  skip(direction) {
+    if (direction === "prev") {
+      let index = this.index - 1;
+
+      // first track
+      if (index < 0) {
+        index = this.playlist.length - 1;
+      }
+
+      this.skipTo(index);
+    } else {
+      let index = this.index + 1;
+
+      // last track
+      if (index >= this.playlist.length) {
+        index = 0;
+      }
+
+      this.skipTo(index);
+    }
+  }
+
+  // 3. skipTo Method
+  skipTo(id) {
+    const currentPlaying = this.playlist[this.index].listen;
+
+    if (currentPlaying) {
+      currentPlaying.stop();
+    }
+
+    this.play(id);
+  }
+
+  // 4. pause Method
+  pause() {
+    this.playlist[this.index].listen.pause();
+  }
+}
+
 // ======== Play batch audio =========
 select(".sura_tools-playlist").addEventListener("click", (e) => {
   if (e.target.textContent === "playlist_play") {
@@ -2708,7 +2793,11 @@ select(".sura_tools-playlist").addEventListener("click", (e) => {
     // 2. load audio suraID and reciterId
     loadAudios("114", "ar.alafasy");
 
-    // playAllAyahs(sura114Recitation.map(({ audio }) => new Audio(audio)));
+    // 3. display bottom audio control bar
+    select(".player_controls").classList.remove("d-none");
+
+    // 4. display dowloading state
+    select(".operation_btn-loading").classList.remove("d-none");
   }
 });
 
@@ -2736,79 +2825,70 @@ function constructPlaylist(data) {
     };
   });
 
+  // add track to playlist
+  addTracksToPlaylist(data);
   readyToplay(playlist);
 }
 
+// audio file is ready to play
 function readyToplay(playlist) {
   const player = new Player(playlist);
 
   // play the audio
-  console.log("ready to play", playlist);
   player.play();
+
+  // pause the audio
+  select(".operation_btn-pause").addEventListener("click", () => {
+    player.pause();
+  });
+
+  // play the audio
+  select(".operation_btn-play").addEventListener("click", () => {
+    player.play();
+  });
+
+  // next track
+  select(".control_operations-next").addEventListener("click", () => {
+    player.skip("next");
+  });
+
+  // previous track
+  select(".control_operations-prev").addEventListener("click", () => {
+    player.skip("prev");
+  });
+
+  // skip to
+  select(".playlist_tracks").addEventListener("click", (e) => {
+    if (e.target.id) {
+      player.skipTo(parseInt(e.target.id.split("-")[1]));
+    }
+  });
 }
 
-// ========== Player Class ==============
-class Player {
-  constructor(playlist) {
-    this.playlist = playlist;
-    this.index = 0;
-  }
+// adding track to playlist
+function addTracksToPlaylist({ englishName, number, numberOfAyahs, ayahs }) {
+  select(
+    ".playlist_tracks-name"
+  ).innerHTML = `${number}. ${englishName} (${numberOfAyahs})`;
 
-  // 1. Play Method
-  play(id) {
-    const index = typeof id === "number" ? id : this.index;
-    let audio;
-
-    const { src, listen } = this.playlist[index];
-
-    // if the file already added
-    if (listen) {
-      audio = listen;
-    } else {
-      audio = new Howl({
-        src: src,
-        html5: true,
-        onend: () => {
-          this.skip("next");
-        },
-      });
-    }
-
-    // begin playing audio
-    audio.play();
-
-    // set currenty playing index
-    this.index = index;
-  }
-
-  // 2. skip Method
-  skip(direction) {
-    if (direction === "prev") {
-      let index = this.index - 1;
-
-      // first track
-      if (index < 0) {
-        index = this.playlist.length - 1;
-      }
-
-      this.play(index);
-    } else {
-      let index = this.index + 1;
-
-      // last track
-      if (index >= this.playlist.length) {
-        index = 0;
-      }
-
-      this.play(index);
-    }
-  }
-
-  // 3. skipTo Method
-  skipTo(id) {
-    this.play(id);
-  }
+  select(".playlist_tracks-listItem").innerHTML = ayahs
+    .map(
+      ({ number }, i) => `<li id="ayah-${i}">Ayah <small>${number}</small></li>`
+    )
+    .join(" ");
 }
+
+// Toggle playlist
+select(".player_controls-playlist").addEventListener("click", (e) => {
+  const tracks = select(".playlist_tracks");
+  if (tracks.className.includes("d-none")) {
+    tracks.classList.remove("d-none");
+    tracks.classList.add("d-block");
+  } else {
+    tracks.classList.remove("d-block");
+    tracks.classList.add("d-none");
+  }
+});
 
 /* let ai = 0;
 function playAllAyahs(audios) {

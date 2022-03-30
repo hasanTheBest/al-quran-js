@@ -47,6 +47,7 @@
           <i class="material-icons">skip_previous</i>
         </div>
         <div class="sura_tools-playlist">
+          <span class="material-icons"> volume_up </span>
           <i class="material-icons">playlist_play</i>
         </div>
         <div class="sura_tools-previous">
@@ -106,35 +107,54 @@
     </main>
 
     <section
-      class="player_controls d-flex justify-content-center align-items-center align-items-end p-1 bg-light position-sticky bottom-0"
+      class="player_controls d-flex justify-content-center align-items-center align-items-end p-1 bg-light position-sticky bottom-0 d-none"
     >
       <div class="player_controls-playlist">
-        <button class="btn">
+        <button class="btn" title="Playlist">
           <span class="material-icons">queue_music</span>
         </button>
       </div>
       <div class="control_operations d-flex justify-content-center">
-        <button class="btn control_operations-prevSura">Prev Sura</button>
-        <button class="btn control_operations-prev">Prev</button>
-        <div class="operations_btn position-relative" style="width: 100px">
+        <button class="btn control_operations-prevSura" title="Previous Sura">
+          <span class="material-icons"> skip_previous </span>
+        </button>
+        <button class="btn control_operations-prev" title="Previous">
+          <span class="material-icons"> fast_rewind </span>
+        </button>
+        <div class="operation_btn position-relative" style="width: 50px">
           <button
-            class="btn operations_btn-pause position-absolute w-100 d-block"
+            class="btn operation_btn-pause position-absolute w-100 d-none"
+            title="Pause"
           >
-            Pause
+            <span class="material-icons"> pause </span>
           </button>
           <button
-            class="btn operations_btn-play position-absolute w-100 d-block"
+            class="btn operation_btn-play position-absolute w-100 d-none"
+            title="Play"
           >
-            Play
+            <span class="material-icons"> play_arrow </span>
           </button>
           <button
-            class="btn operations_btn-loading position-absolute w-100 d-block"
+            class="btn operation_btn-loading position-absolute w-100 d-none"
+            title="Downloading"
           >
-            Loading
+            <span class="material-icons"> downloading </span>
           </button>
         </div>
-        <button class="btn control_operations-next">Next</button>
-        <button class="btn control_operations-nextSura">Next Sura</button>
+        <button class="btn control_operations-next" title="Next">
+          <span class="material-icons"> fast_forward </span>
+        </button>
+        <button class="btn control_operations-nextSura" title="Next Sura">
+          <span class="material-icons"> skip_next </span>
+        </button>
+      </div>
+
+      <!-- Sidebar playlist -->
+      <div
+        class="playlist_tracks position-absolute bottom-0 start-0 mx-3 bg-light p-3 d-none"
+      >
+        <h4 class="playlist_tracks-name"></h4>
+        <ol class="playlist_tracks-listItem"></ol>
       </div>
     </section>
 
