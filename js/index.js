@@ -2703,11 +2703,114 @@ function select(selector) {
 // ======== Play batch audio =========
 select(".sura_tools-playlist").addEventListener("click", (e) => {
   if (e.target.textContent === "playlist_play") {
-    playAllAyahs(sura114Recitation.map(({ audio }) => new Audio(audio)));
+    // 1. display audio play container
+
+    // 2. load audio suraID and reciterId
+    loadAudios("114", "ar.alafasy");
+
+    // playAllAyahs(sura114Recitation.map(({ audio }) => new Audio(audio)));
   }
 });
 
-let ai = 0;
+// laoding audio file
+async function loadAudios(suraID, reciter) {
+  const url = `https://api.alquran.cloud/v1/surah/${suraID}/${reciter}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    // construct palylist
+    data.status === "OK" && constructPlaylist(data.data);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// making playlist
+function constructPlaylist(data) {
+  const playlist = data.ayahs.map(({ audio, number }) => {
+    return {
+      src: audio,
+      title: number,
+      listen: null,
+    };
+  });
+
+  readyToplay(playlist);
+}
+
+function readyToplay(playlist) {
+  const player = new Player(playlist);
+
+  // play the audio
+  console.log("ready to play", playlist);
+  player.play();
+}
+
+// ========== Player Class ==============
+class Player {
+  constructor(playlist) {
+    this.playlist = playlist;
+    this.index = 0;
+  }
+
+  // 1. Play Method
+  play(id) {
+    const index = typeof id === "number" ? id : this.index;
+    let audio;
+
+    const { src, listen } = this.playlist[index];
+
+    // if the file already added
+    if (listen) {
+      audio = listen;
+    } else {
+      audio = new Howl({
+        src: src,
+        html5: true,
+        onend: () => {
+          this.skip("next");
+        },
+      });
+    }
+
+    // begin playing audio
+    audio.play();
+
+    // set currenty playing index
+    this.index = index;
+  }
+
+  // 2. skip Method
+  skip(direction) {
+    if (direction === "prev") {
+      let index = this.index - 1;
+
+      // first track
+      if (index < 0) {
+        index = this.playlist.length - 1;
+      }
+
+      this.play(index);
+    } else {
+      let index = this.index + 1;
+
+      // last track
+      if (index >= this.playlist.length) {
+        index = 0;
+      }
+
+      this.play(index);
+    }
+  }
+
+  // 3. skipTo Method
+  skipTo(id) {
+    this.play(id);
+  }
+}
+
+/* let ai = 0;
 function playAllAyahs(audios) {
   // highligth playing ahah bg dfds
   select(".list-ayahs").children[ai].style.backgroundColor =
@@ -2733,42 +2836,4 @@ function playAllAyahs(audios) {
       ai = 0;
     });
   }
-}
-
-// Play all ayahs
-/* function playAllAyahs(ayahs) {
-  console.log("playAllAyahs", ayahs);
-
-  let verse = 0,
-    verseAudio;
-
-  // if (verse < ayahs.length) {
-  verseAudio = new Audio(ayahs[verse]["audio"]);
-  verseAudio.play();
-
-  verseAudio.addEventListener("ended", () => {
-    if (verse < ayahs.length) {
-      verseAudio = new Audio(ayahs[verse]["audio"]);
-      verseAudio.play();
-      verse++;
-    }
-  });
 } */
-// }
-
-// function playAllAyahs(audios) {
-//   let ai = 0;
-//   // audios.forEach((audio) => await audio.play());
-
-//   playSingleTrack(audios[ai], ai);
-//   // audios[ai].addEventListener("ended", () => {
-//   //   ai++;
-//   // })
-// }
-
-// function playSingleTrack(track, ai) {
-//   track.play();
-//   track.addEventListener("ended", () => {
-//     playSingleTrack(audios[++ai], ++ai);
-//   });
-// }
