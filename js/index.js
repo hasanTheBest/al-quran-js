@@ -1,4 +1,6 @@
 const API_URL = "https://api.alquran.cloud/v1/surah/";
+let playerInstances = 0,
+  player;
 
 // ========== Player Class ==============
 class Player {
@@ -46,6 +48,11 @@ class Player {
       select(".operation_btn-loading").classList.add("d-none");
     }
 
+    // console.log(audio.playing());
+    // if (audio.playing) {
+    //   audio.stop();
+    // }
+
     // set currenty playing index
     this.index = index;
   }
@@ -87,6 +94,13 @@ class Player {
   // 4. pause Method
   pause() {
     this.playlist[this.index].listen.pause();
+  }
+
+  // 5. stop method
+  stop() {
+    // stop current playing audio
+    const current = this.playlist[this.index].listen;
+    current && current.stop();
   }
 }
 
@@ -193,6 +207,7 @@ select(".select_sura-recitation").addEventListener("change", (e) => {
   const { value } = e.target;
 
   // load sura
+  // const player = new Player([]);
   loadAudios(select(".sura_number-en")["textContent"], value);
 
   // display audio bar
@@ -202,6 +217,10 @@ select(".select_sura-recitation").addEventListener("change", (e) => {
 // =========== Loading Sura, translation and Recitation ============
 // load sura
 async function loadSura(id) {
+  // need to fetch new recitation
+  playerInstances = 0;
+  player && player.stop();
+
   const data = await fetchData(id);
   displaySura(data[0]);
 
@@ -407,7 +426,13 @@ function constructPlaylist(data) {
 
 // audio file is ready to play
 function readyToplay(playlist) {
-  const player = new Player(playlist);
+  if (playerInstances === 0) {
+    player = new Player(playlist);
+    playerInstances++;
+  } else {
+    player.stop();
+    player.playlist = playlist;
+  }
 
   // play the audio
   // player.play();
