@@ -48,11 +48,6 @@ class Player {
       select(".operation_btn-loading").classList.add("d-none");
     }
 
-    // console.log(audio.playing());
-    // if (audio.playing) {
-    //   audio.stop();
-    // }
-
     // set currenty playing index
     this.index = index;
   }
@@ -101,6 +96,9 @@ class Player {
     // stop current playing audio
     const current = this.playlist[this.index].listen;
     current && current.stop();
+    select(".operation_btn-loading").classList.add("d-none");
+    select(".operation_btn-pause").classList.add("d-none");
+    select(".operation_btn-play").classList.remove("d-none");
   }
 }
 
@@ -207,11 +205,11 @@ select(".select_sura-recitation").addEventListener("change", (e) => {
   const { value } = e.target;
 
   // load sura
-  // const player = new Player([]);
   loadAudios(select(".sura_number-en")["textContent"], value);
 
-  // display audio bar
+  // display audio control bar
   select(".player_controls").classList.remove("d-none");
+  select(".operation_btn-loading").classList.remove("d-none");
 });
 
 // =========== Loading Sura, translation and Recitation ============
@@ -375,21 +373,6 @@ function displaySuraTranslation(ayahs, identifier) {
   }
 }
 
-// Attach Sura recitation
-function attachRecitation(ayahs) {
-  const verses = select(".list-ayahs").children;
-
-  for (let i = 0; i < verses.length; i++) {
-    const playButton = verses[i].firstElementChild.firstElementChild;
-
-    if (playButton.childElementCount > 1) {
-      playButton.children[1].src = ayahs[i]["audio"];
-    } else {
-      playButton.innerHTML += `<audio src="${ayahs[i]["audio"]}"></audio>`;
-    }
-  }
-}
-
 // ======== Play batch audio =========
 select(".sura_tools-playlist").addEventListener("click", (e) => {
   if (e.target.textContent === "playlist_play") {
@@ -404,7 +387,7 @@ select(".sura_tools-playlist").addEventListener("click", (e) => {
     // 3. display bottom audio control bar
     select(".player_controls").classList.remove("d-none");
 
-    // 4. display dowloading state
+    // 4. display downloading state
     select(".operation_btn-loading").classList.remove("d-none");
   }
 });
@@ -421,11 +404,11 @@ function constructPlaylist(data) {
 
   // add track to playlist
   addTracksToPlaylist(data);
-  readyToplay(playlist);
+  readyToPlay(playlist);
 }
 
 // audio file is ready to play
-function readyToplay(playlist) {
+function readyToPlay(playlist) {
   if (playerInstances === 0) {
     player = new Player(playlist);
     playerInstances++;
@@ -435,10 +418,7 @@ function readyToplay(playlist) {
   }
 
   // play the audio
-  // player.play();
-
-  // stop the prev play
-  // player.stop();
+  player.play();
 
   select(".operation_btn-loading").classList.add("d-none");
   select(".operation_btn-play").classList.remove("d-none");
@@ -512,13 +492,13 @@ select(".control_operations-prevSura").addEventListener("click", () => {
   prevNextPlaylist(index);
 });
 
-// load next plalist
+// load next playlist
 function prevNextPlaylist(id) {
   // 1. load sura to display
   loadSura(id);
 
   // 2. load audios
-  loadAudios(id, "ar.alafasy");
+  loadAudios(id, select(".select_sura-recitation").value);
 }
 
 // ======== Utilities =======
@@ -536,96 +516,3 @@ function create(element) {
 function select(selector) {
   return document.querySelector(selector);
 }
-
-/* let ai = 0;
-function playAllAyahs(audios) {
-  // highligth playing ahah bg dfds
-  select(".list-ayahs").children[ai].style.backgroundColor =
-    "rgba(0, 0, 0, .1)";
-  window.scrollTo(0, select(".list-ayahs").children[ai].offsetTop);
-
-  // play ayah
-  audios[ai].play();
-  playNow = audios[ai];
-
-  if (ai < audios.length - 1) {
-    audios[ai].addEventListener("ended", () => {
-      select(".list-ayahs").children[ai].style.backgroundColor = "inherit";
-
-      ai++;
-      playAllAyahs(audios);
-    });
-  }
-
-  if (ai === audios.length - 1) {
-    audios[audios.length - 1].addEventListener("ended", () => {
-      select(".list-ayahs").lastElementChild.style.backgroundColor = "inherit";
-      ai = 0;
-    });
-  }
-} */
-
-/* let playNow = null;
-// click to listen ayah
-select(".list-ayahs").addEventListener("click", async (e) => {
-  e.stopImmediatePropagation();
-
-  if (e.target.textContent.includes("play_circle")) {
-    const that = e.target;
-
-    // stop prev play
-    playNow !== null && playNow.pause();
-
-    that.textContent = "pending";
-    that.parentElement.parentElement.parentElement.classList.add("bg-light");
-
-    const ayahInSurah = e.target.parentElement.parentElement.parentElement.id;
-
-    const data = await fetchData(
-      ayahInSurah,
-      select(".select_sura-recitation")["value"]
-    );
-
-    if (data.hasOwnProperty("audio")) {
-      const audio = new Audio(data.audio);
-
-      audio.play();
-      that.textContent = "pause";
-      that.classList.add("text-success");
-
-      audio.addEventListener("playing", () => {
-        playNow = audio;
-
-        that.addEventListener("click", () => {
-          audio.pause();
-          that.textContent = "play_arrow";
-        });
-      });
-
-      audio.addEventListener("pause", () => {
-        that.addEventListener("click", () => {
-          audio.play();
-          that.textContent = "pause";
-        });
-      });
-
-      audio.addEventListener("ended", () => {
-        that.textContent = "play_circle";
-        that.classList.remove("text-success");
-        that.parentElement.parentElement.parentElement.classList.remove(
-          "bg-light"
-        );
-      });
-    }
-  }
-}); */
-
-// load reciation
-/* function loadRecitation(identifier) {
-  const sura = select(".sura_number-en").textContent;
-
-  attachRecitation(fetchData(sura, identifier));
-
-   // offline testing purposes
-   // attachRecitation(sura114Recitation);
-} */
