@@ -24,41 +24,9 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <header class="text-center bg-light p-3 sura pb-0">
-      <div class="sura_info">
-        <p class="mb-0">
-          <span class="sura_number-en">114</span>
-          <span class="sura_name-en">An-Naas</span>,
-          <span class="sura_name-tr_en">Mankind</span>
-        </p>
-        <h1>
-          <span class="sura_name-ar text_ar">سُورَةُ النَّاسِ</span>
-          <span class="sura_number-ar text_ar">114</span>
-        </h1>
-        <p class="text-secondary">
-          <span class="sura_type mb-0">Meccan</span>, Ayahs:
-          <span class="sura_ayahs">6</span>
-        </p>
-      </div>
-
-      <!-- sura tools -->
-      <div class="sura_tools d-flex justify-content-center">
-        <div class="sura_tools-previous">
-          <i class="material-icons">skip_previous</i>
-        </div>
-        <div class="sura_tools-playlist">
-          <span class="material-icons"> volume_up </span>
-          <i class="material-icons">playlist_play</i>
-        </div>
-        <div class="sura_tools-previous">
-          <i class="material-icons">skip_next</i>
-        </div>
-      </div>
-
+    <header class="text-center bg-dark sura sticky-top w-100">
       <!-- sura navigation -->
-      <div
-        class="sura_nav d-flex justify-content-between mx-auto p-3 pb-0 sticky-top"
-      >
+      <div class="sura_nav d-flex justify-content-between gap-2 mx-auto p-2">
         <!-- Index -->
         <div class="form-floating sura_nav-index">
           <select
@@ -69,8 +37,18 @@
           <label for="floatingSelect">Sura</label>
         </div>
 
+        <!-- Ayah -->
+        <div class="form-floating w-25">
+          <select
+            class="form-select sura_nav-gotoAyah"
+            id="floatingSelectGoToAyah"
+            aria-label="Go to Ayah"
+          ></select>
+          <label for="floatingSelectGoToAyah">Ayah</label>
+        </div>
+
         <!-- Translation -->
-        <div class="form-floating sura_nav-translation">
+        <div class="form-floating sura_nav-translation w-50">
           <select
             class="form-select select_sura-translations"
             id="floatingSelect"
@@ -82,7 +60,7 @@
         </div>
 
         <!-- Recitation -->
-        <div class="form-floating sura_nav-recitation">
+        <div class="form-floating sura_nav-recitation w-25">
           <select
             class="form-select select_sura-recitation text_ar"
             id="floatingSelect"
@@ -95,14 +73,52 @@
       </div>
     </header>
 
-    <main>
-      <!-- ayah list -->
-      <h2
-        class="heading-bismillah text-center"
-        title="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+    <main class="mt-0">
+      <!-- Sura meta info -->
+      <div
+        class="sura_header d-flex justify-content-between align-items-center mb-3 bg-light p-3"
       >
-        <span class="raq raq-bismallah display-1"></span>
-      </h2>
+        <!-- listen sura -->
+        <div class="sura_header-start d-flex flex-column">
+          <button class="btn sura_header-start_info d-flex align-items-center">
+            <i class="material-icons me-2">playlist_play</i>
+            <span>Info</span>
+          </button>
+          <button
+            class="sura_header-start_listen btn d-flex align-items-center"
+          >
+            <i class="material-icons me-2">volume_up</i>
+            <span>Listen</span>
+          </button>
+        </div>
+
+        <!-- bimillah -->
+        <div class="sura_header-middle">
+          <h2
+            class="heading-bismillah text-center"
+            title="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+          >
+            <span class="raq raq-bismallah display-1"></span>
+          </h2>
+        </div>
+
+        <!-- Sura name and info -->
+        <div class="sura_header-end">
+          <div class="sura_info">
+            <p class="mb-0 text-black-50">
+              <span class="sura_number-en">114</span>
+              <span class="sura_name-en">An-Naas</span>,
+              <span class="sura_name-tr_en">Mankind</span>
+            </p>
+            <h1>
+              <span class="sura_number-ar text_ar">114</span>
+              <span class="sura_name-ar text_ar">سُورَةُ النَّاسِ</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Display Ayahs -->
       <ul class="list-group list-group-flush list-ayahs"></ul>
     </main>
 

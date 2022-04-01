@@ -125,7 +125,7 @@ function displaySuraIndex(suraList) {
   const options = suraList
     .map(
       ({ englishName, number, name }, i) =>
-        `<option class="h4" value="${number}" ${
+        `<option class="h6" value="${number}" ${
           i === 0 ? "selected" : ""
         }>${number}. ${englishName} - ${name}</option>`
     )
@@ -283,6 +283,9 @@ function displaySura(sura) {
     numberOfAyahs,
   } = sura;
 
+  // adding options to goto ayah select element
+  addAyahNoOptions(numberOfAyahs);
+
   shouldDisplayBismillah(number);
 
   displaySuraInfo({
@@ -294,7 +297,16 @@ function displaySura(sura) {
     numberOfAyahs,
   });
 
-  // Omit bismill
+  // add options to goto ayahs select
+  function addAyahNoOptions(count) {
+    const ayahs = new Array(count).fill(0).map((_, i) => i + 1);
+    const content = ayahs
+      .map((ayah, i) => `<option ${i === 0 && "selected"}>${ayah}</option>`)
+      .join(" ");
+    setValue(".sura_nav-gotoAyah", content);
+  }
+
+  // Omit bismillah
   function shouldDisplayBismillah(suraNo) {
     const bismillah = select(".heading-bismillah");
     if (suraNo === 1 || suraNo === 9) bismillah.classList.add("d-none");
@@ -315,8 +327,8 @@ function displaySura(sura) {
     setValue(".sura_name-tr_en", englishNameTranslation, "textContent");
     setValue(".sura_name-ar", name, "textContent");
     setValue(".sura_number-ar", number.toLocaleString("ar-EG"), "textContent");
-    setValue(".sura_type", revelationType, "textContent");
-    setValue(".sura_ayahs", numberOfAyahs, "textContent");
+    // setValue(".sura_type", revelationType, "textContent");
+    // setValue(".sura_ayahs", numberOfAyahs, "textContent");
   }
 
   // display ayahs
@@ -376,7 +388,7 @@ function displaySuraTranslation(ayahs, identifier) {
 }
 
 // ======== Play batch audio =========
-select(".sura_tools-playlist").addEventListener("click", (e) => {
+select(".sura_header-right_listen").addEventListener("click", (e) => {
   if (e.target.textContent === "playlist_play") {
     // 1. display audio play container
 
