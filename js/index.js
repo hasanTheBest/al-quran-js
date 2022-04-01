@@ -71,6 +71,8 @@ class Player {
         index = 0;
       }
 
+      console.log("skip ", index, this.index);
+
       this.skipTo(index);
     }
   }
@@ -422,34 +424,34 @@ function readyToPlay(playlist) {
 
   select(".operation_btn-loading").classList.add("d-none");
   select(".operation_btn-play").classList.remove("d-none");
-
-  // play the audio
-  select(".operation_btn-play").addEventListener("click", () => {
-    player.play();
-  });
-
-  // pause the audio
-  select(".operation_btn-pause").addEventListener("click", () => {
-    player.pause();
-  });
-
-  // next track
-  select(".control_operations-next").addEventListener("click", () => {
-    player.skip("next");
-  });
-
-  // previous track
-  select(".control_operations-prev").addEventListener("click", () => {
-    player.skip("prev");
-  });
-
-  // skip to
-  select(".playlist_tracks").addEventListener("click", (e) => {
-    if (e.target.id) {
-      player.skipTo(parseInt(e.target.id.split("-")[1]));
-    }
-  });
 }
+
+// play the audio
+select(".operation_btn-play").addEventListener("click", () => {
+  player.play();
+});
+
+// pause the audio
+select(".operation_btn-pause").addEventListener("click", () => {
+  player.pause();
+});
+
+// next track
+select(".control_operations-next").addEventListener("click", () => {
+  player.skip("next");
+});
+
+// previous track
+select(".control_operations-prev").addEventListener("click", () => {
+  player.skip("prev");
+});
+
+// skip to
+select(".playlist_tracks").addEventListener("click", (e) => {
+  if (e.target.id) {
+    player.skipTo(parseInt(e.target.id.split("-")[1]));
+  }
+});
 
 // adding track to playlist
 function addTracksToPlaylist({ englishName, number, numberOfAyahs, ayahs }) {
