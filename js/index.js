@@ -29,12 +29,26 @@ class Player {
           select(".operation_btn-loading").classList.add("d-none");
           select(".operation_btn-pause").classList.remove("d-none");
           select(".operation_btn-play").classList.add("d-none");
+
+          // hight playing ayah
+          select(".list-ayahs").children[this.index].classList.add("bg-light");
+          select(".playlist_tracks-listItem").children[
+            this.index
+          ].classList.add("active");
         },
         onpause: () => {
           select(".operation_btn-pause").classList.add("d-none");
           select(".operation_btn-play").classList.remove("d-none");
         },
         onend: () => {
+          // remove highlighting bg
+          select(".list-ayahs").children[this.index].classList.remove(
+            "bg-light"
+          );
+          select(".playlist_tracks-listItem").children[
+            this.index
+          ].classList.remove("active");
+
           this.skip("next");
         },
       });
@@ -71,8 +85,6 @@ class Player {
         index = 0;
       }
 
-      console.log("skip ", index, this.index);
-
       this.skipTo(index);
     }
   }
@@ -83,6 +95,12 @@ class Player {
 
     if (currentPlaying) {
       currentPlaying.stop();
+
+      // remove highlighting bg of ayah
+      select(".list-ayahs").children[this.index].classList.remove("bg-light");
+      select(".playlist_tracks-listItem").children[this.index].classList.remove(
+        "active"
+      );
     }
 
     this.play(id);
@@ -319,16 +337,12 @@ function displaySura(sura) {
     name,
     englishName,
     englishNameTranslation,
-    revelationType,
-    numberOfAyahs,
   }) {
     setValue(".sura_number-en", number, "textContent");
     setValue(".sura_name-en", englishName, "textContent");
     setValue(".sura_name-tr_en", englishNameTranslation, "textContent");
     setValue(".sura_name-ar", name, "textContent");
     setValue(".sura_number-ar", number.toLocaleString("ar-EG"), "textContent");
-    // setValue(".sura_type", revelationType, "textContent");
-    // setValue(".sura_ayahs", numberOfAyahs, "textContent");
   }
 
   // display ayahs
@@ -337,19 +351,24 @@ function displaySura(sura) {
 
 // Display Ayahs
 function displayAyahs(ayahs, suraNo) {
-  const verses = ayahs.map(({ text, numberInSurah }) => {
+  const verses = ayahs.map(({ text, numberInSurah }, i) => {
     return `
-    <li class="list-group-item ayah d-flex justify-content-between pt-3" id=${
+    <li class="list-group-item ayah d-flex justify-content-between pt-4" id=${
       suraNo + ":" + numberInSurah
     }>
       <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
-        <div class="ayah_tools-play">
-          <i class="material-icons">play_circle</i>
+        <div class="ayah_tools-play" id="ayah-play-${i + 1}">
+          <button class="btn ayah-play-btn">
+            <i class="material-icons mi-play_arrow">play_arrow</i>
+          </button>
+          <button class="btn d-none ayah-pause-btn">
+          <i class="material-icons pause d-none">pause</i>
+          </button>
         </div>
       </div>
 
       <div class="ayah_text">
-        <div class="text-end h2 mb-3">
+        <div class="text-end h2 mb-4">
           <b class="ayah_text-ar text_ar">
           ${
             numberInSurah === 1 && suraNo !== 1 && suraNo !== 9
@@ -370,6 +389,15 @@ function displayAyahs(ayahs, suraNo) {
   select(".list-ayahs").innerHTML = verses.join("");
 }
 
+// handle specific ayah play icon click
+// select(".list-ayahs").addEventListener("click", () => {
+//   console.log(this);
+// });
+
+function hellowBd(e) {
+  console.log(e);
+}
+
 // Display Sura Translation
 function displaySuraTranslation(ayahs, identifier) {
   const [locale, author] = identifier.split(".");
@@ -388,22 +416,29 @@ function displaySuraTranslation(ayahs, identifier) {
 }
 
 // ======== Play batch audio =========
-select(".sura_header-right_listen").addEventListener("click", (e) => {
-  if (e.target.textContent === "playlist_play") {
-    // 1. display audio play container
+// open audio play bar
+select(".sura_header-start_listen").addEventListener("click", (e) => {
+  // 2. load audio suraID and reciterId
+  loadAudios(
+    select(".sura_number-en").textContent,
+    select(".select_sura-recitation")["value"]
+  );
 
-    // 2. load audio suraID and reciterId
-    loadAudios(
-      select(".sura_number-en").textContent,
-      select(".select_sura-recitation")["value"]
-    );
+  // 3. display bottom audio control bar
+  select(".player_controls").classList.remove("d-none");
 
-    // 3. display bottom audio control bar
-    select(".player_controls").classList.remove("d-none");
+  // 4. display downloading state
+  select(".operation_btn-pause").classList.add("d-none");
+  select(".operation_btn-loading").classList.remove("d-none");
+});
 
-    // 4. display downloading state
-    select(".operation_btn-loading").classList.remove("d-none");
-  }
+// close
+select(".close_audio-playBar").addEventListener("click", () => {
+  // stop the player
+  player.stop();
+
+  // hide the audio play bar
+  select(".player_controls").classList.add("d-none");
 });
 
 // making playlist
@@ -459,11 +494,15 @@ select(".control_operations-prev").addEventListener("click", () => {
 });
 
 // skip to
-select(".playlist_tracks").addEventListener("click", (e) => {
-  if (e.target.id) {
-    player.skipTo(parseInt(e.target.id.split("-")[1]));
-  }
-});
+select(".playlist_tracks").addEventListener(
+  "click",
+  (e) => {
+    if (e.target.id) {
+      player.skipTo(parseInt(e.target.id.split("-")[1]));
+    }
+  },
+  true
+);
 
 // adding track to playlist
 function addTracksToPlaylist({ englishName, number, numberOfAyahs, ayahs }) {
@@ -473,20 +512,27 @@ function addTracksToPlaylist({ englishName, number, numberOfAyahs, ayahs }) {
 
   select(".playlist_tracks-listItem").innerHTML = ayahs
     .map(
-      ({ number }, i) => `<li id="ayah-${i}">Ayah <small>${number}</small></li>`
+      ({ number }, i) =>
+        `<li class="list-group-item list-group-item-light d-flex align-items-center"><span>${
+          i + 1
+        }</span>. <button class="btn flex-grow-1 text-start" id="ayah-${i}" > Ayah <small>${number}</small></button></li>`
     )
     .join(" ");
 }
 
 // Toggle playlist
-select(".player_controls-playlist").addEventListener("click", (e) => {
+select(".playlist_control-togglePlaylist").addEventListener("click", (e) => {
   const tracks = select(".playlist_tracks");
+  const icon = select(".playlist_control-togglePlaylist > .material-icons");
+
   if (tracks.className.includes("d-none")) {
     tracks.classList.remove("d-none");
     tracks.classList.add("d-block");
+    icon.innerHTML = "playlist_remove";
   } else {
     tracks.classList.remove("d-block");
     tracks.classList.add("d-none");
+    icon.innerHTML = "queue_music";
   }
 });
 

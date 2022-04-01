@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <header class="text-center bg-dark sura sticky-top w-100">
+    <header class="text-center bg-light sura sticky-top w-100 shadow-sm">
       <!-- sura navigation -->
       <div class="sura_nav d-flex justify-content-between gap-2 mx-auto p-2">
         <!-- Index -->
@@ -76,16 +76,18 @@
     <main class="mt-0">
       <!-- Sura meta info -->
       <div
-        class="sura_header d-flex justify-content-between align-items-center mb-3 bg-light p-3"
+        class="sura_header d-flex justify-content-between align-items-center mb-4 bg-light p-4 rounded-bottom shadow-sm"
       >
         <!-- listen sura -->
         <div class="sura_header-start d-flex flex-column">
-          <button class="btn sura_header-start_info d-flex align-items-center">
+          <button
+            class="btn btn-outline-primary border-0 sura_header-start_info d-flex align-items-center"
+          >
             <i class="material-icons me-2">playlist_play</i>
-            <span>Info</span>
+            <span>Sura Info</span>
           </button>
           <button
-            class="sura_header-start_listen btn d-flex align-items-center"
+            class="sura_header-start_listen btn border-0 btn-outline-success d-flex align-items-center"
           >
             <i class="material-icons me-2">volume_up</i>
             <span>Listen</span>
@@ -105,15 +107,17 @@
         <!-- Sura name and info -->
         <div class="sura_header-end">
           <div class="sura_info">
-            <p class="mb-0 text-black-50">
-              <span class="sura_number-en">114</span>
-              <span class="sura_name-en">An-Naas</span>,
-              <span class="sura_name-tr_en">Mankind</span>
-            </p>
-            <h1>
-              <span class="sura_number-ar text_ar">114</span>
-              <span class="sura_name-ar text_ar">سُورَةُ النَّاسِ</span>
+            <h1 class="mb-0">
+              <span class="sura_number-ar text_ar"></span>
+              <span class="sura_name-ar text_ar"></span>
             </h1>
+            <p class="mb-0 text-black-50">
+              <span
+                class="sura_number-en border-2 rounded-circle p-1 border-dark"
+              ></span>
+              <span class="sura_name-en"></span>,
+              <span class="sura_name-tr_en"></span>
+            </p>
           </div>
         </div>
       </div>
@@ -122,34 +126,55 @@
       <ul class="list-group list-group-flush list-ayahs"></ul>
     </main>
 
+    <!-- audio bar -->
     <section
-      class="player_controls d-flex justify-content-center align-items-center align-items-end p-1 bg-light position-sticky bottom-0 d-none"
+      class="player_controls d-flex justify-content-center align-items-center align-items-end p-1 bg-light position-sticky bottom-0 d-none shadow-sm"
     >
-      <div class="player_controls-playlist">
-        <button class="btn" title="Playlist">
+      <!-- playlist button -->
+      <div class="player_controls-playlist position-relative">
+        <button class="btn playlist_control-togglePlaylist" title="Playlist">
           <span class="material-icons">queue_music</span>
         </button>
+
+        <!-- playlist track -->
+        <div
+          class="playlist_tracks position-absolute bottom-0 start-0 bg-light p-3 d-none mb-5 overflow-scroll shadow rounded-top"
+          style="width: 300px"
+        >
+          <h5 class="playlist_tracks-name text-center mb-3 text-secondary"></h5>
+          <ol class="playlist_tracks-listItem list-group-flush m-0 p-0"></ol>
+        </div>
       </div>
-      <div class="control_operations d-flex justify-content-center">
+
+      <!-- next, prev, play and pause -->
+      <div
+        class="control_operations d-flex justify-content-center position-relative"
+      >
+        <!-- Prev Sura -->
         <button class="btn control_operations-prevSura" title="Previous Sura">
           <span class="material-icons"> skip_previous </span>
         </button>
+        <!-- Prev Ayah -->
         <button class="btn control_operations-prev" title="Previous">
           <span class="material-icons"> fast_rewind </span>
         </button>
+        <!-- play, pause, loading -->
         <div class="operation_btn position-relative" style="width: 50px">
+          <!-- pause -->
           <button
             class="btn operation_btn-pause position-absolute w-100 d-none"
             title="Pause"
           >
             <span class="material-icons"> pause </span>
           </button>
+          <!-- play -->
           <button
             class="btn operation_btn-play position-absolute w-100 d-none"
             title="Play"
           >
             <span class="material-icons"> play_arrow </span>
           </button>
+          <!-- downloading -->
           <button
             class="btn operation_btn-loading position-absolute w-100 d-none"
             title="Downloading"
@@ -157,21 +182,23 @@
             <span class="material-icons"> downloading </span>
           </button>
         </div>
+        <!-- Next Ayah -->
         <button class="btn control_operations-next" title="Next">
           <span class="material-icons"> fast_forward </span>
         </button>
+        <!-- Next Sura -->
         <button class="btn control_operations-nextSura" title="Next Sura">
           <span class="material-icons"> skip_next </span>
         </button>
       </div>
 
-      <!-- Sidebar playlist -->
-      <div
-        class="playlist_tracks position-absolute bottom-0 start-50 translate-middle-x bg-light mb-5 p-3 d-none"
+      <!-- Close button -->
+      <button
+        class="btn close_audio-playBar text-danger"
+        title="Close Audio Play Bar"
       >
-        <h5 class="playlist_tracks-name"></h5>
-        <ol class="playlist_tracks-listItem"></ol>
-      </div>
+        <span class="material-icons"> close </span>
+      </button>
     </section>
 
     <footer class="text-center">
