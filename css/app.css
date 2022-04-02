@@ -1,11 +1,11 @@
 @font-face {
   font-family: me_quran;
-  src: url("/fonts/Uthmanic-Hafs.woff2");
+  src: url("./fonts/Uthmanic-Hafs.woff2");
 }
 
 @font-face {
   font-family: bismillah;
-  src: url("/fonts/bismillah.woff");
+  src: url("./fonts/bismillah.woff");
 }
 
 .raq {
