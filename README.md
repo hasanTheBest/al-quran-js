@@ -12,6 +12,7 @@ live: https://hasanthebest.github.io/al-quran-js/
 - Simple and easy navigation by sura/chapter name
 - Goto ayah with smooth scrolling
 - Auto highlighting playing Ayah
+- Mobile responsive
 
 ## Tools
 
