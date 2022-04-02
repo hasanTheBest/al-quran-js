@@ -10,7 +10,7 @@ class Player {
   }
 
   // 1. Play Method
-  play(id) {
+  play(id, stop) {
     const index = typeof id === "number" ? id : this.index;
     let audio;
 
@@ -35,12 +35,38 @@ class Player {
           select(".playlist_tracks-listItem").children[
             this.index
           ].classList.add("active");
+
+          // show pause button on specific ayah
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-play_arrow`
+          ).classList.add("d-none");
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-pause`
+          ).classList.remove("d-none");
         },
         onpause: () => {
           select(".operation_btn-pause").classList.add("d-none");
           select(".operation_btn-play").classList.remove("d-none");
+
+          // show pause button on specific ayah
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-play_arrow`
+          ).classList.remove("d-none");
+
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-pause`
+          ).classList.add("d-none");
         },
         onend: () => {
+          // show pause button on specific ayah
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-play_arrow`
+          ).classList.remove("d-none");
+
+          select(
+            `.list-ayahs li:nth-child(${this.index + 1}) .ayah-pause`
+          ).classList.add("d-none");
+
           // remove highlighting bg
           select(".list-ayahs").children[this.index].classList.remove(
             "bg-light"
@@ -49,7 +75,8 @@ class Player {
             this.index
           ].classList.remove("active");
 
-          this.skip("next");
+          // there is no specific ayah stop
+          !stop && this.skip("next");
         },
       });
     }
@@ -90,7 +117,7 @@ class Player {
   }
 
   // 3. skipTo Method
-  skipTo(id) {
+  skipTo(id, stop = false) {
     const currentPlaying = this.playlist[this.index].listen;
 
     if (currentPlaying) {
@@ -101,9 +128,18 @@ class Player {
       select(".playlist_tracks-listItem").children[this.index].classList.remove(
         "active"
       );
+
+      // stop specific ayah
+      select(
+        `.list-ayahs li:nth-child(${this.index + 1}) .ayah-pause`
+      ).classList.add("d-none");
+
+      select(
+        `.list-ayahs li:nth-child(${this.index + 1}) .ayah-play_arrow`
+      ).classList.remove("d-none");
     }
 
-    this.play(id);
+    this.play(id, stop);
   }
 
   // 4. pause Method
@@ -251,7 +287,7 @@ async function loadTranslation(identifier) {
   const sura = select(".sura_number-en").textContent;
 
   const data = await fetchData(sura, identifier);
-  displaySuraTranslation(data.ayahs, identifier);
+  displaySuraTranslation(data.ayahs, identifier, data.edition.direction);
 
   // offline testing purposes
   // displaySuraTranslation(transList, identifier.split(".")[0]);
@@ -356,13 +392,12 @@ function displayAyahs(ayahs, suraNo) {
     <li class="list-group-item ayah d-flex justify-content-between pt-4" id=${
       suraNo + ":" + numberInSurah
     }>
-      <div class="ayah_tools d-flex flex-column justify-content-center text-secondary">
-        <div class="ayah_tools-play" id="ayah-play-${i + 1}">
-          <button class="btn ayah-play-btn">
-            <i class="material-icons mi-play_arrow">play_arrow</i>
-          </button>
-          <button class="btn d-none ayah-pause-btn">
-          <i class="material-icons pause d-none">pause</i>
+      <div class="ayah_tools d-flex flex-column text-secondary">
+        <div class="ayah_tools-play d-flex align-items-center flex-column">
+        <span class="h6 mb-0 text-black-50"> ${suraNo}:${numberInSurah} </span>
+          <button class="btn btn-small ayah-play-btn" id="ayah-play-${i}">
+            <i class="material-icons ayah-play_arrow">play_arrow</i>
+            <i class="material-icons d-none ayah-pause">pause</i>
           </button>
         </div>
       </div>
@@ -390,27 +425,46 @@ function displayAyahs(ayahs, suraNo) {
 }
 
 // handle specific ayah play icon click
-// select(".list-ayahs").addEventListener("click", () => {
-//   console.log(this);
-// });
+select(".list-ayahs").addEventListener("click", async (e) => {
+  const [{ className }, index] = [
+    e.target,
+    parseInt(e.target.parentElement.id.split("-")[2]),
+  ];
 
-function hellowBd(e) {
-  console.log(e);
-}
+  if (className.includes("ayah-play_arrow")) {
+    // load audio files if there is no player
+    !player &&
+      (await loadAudios(
+        select(".sura_number-en").textContent,
+        select(".select_sura-recitation")["value"]
+      ));
+
+    // play audio and next ayah play must stop
+    player.skipTo(index, true);
+  }
+
+  if (className.includes("ayah-pause")) {
+    player.playlist[index].listen && player.playlist[index].listen.pause();
+  }
+});
 
 // Display Sura Translation
-function displaySuraTranslation(ayahs, identifier) {
+function displaySuraTranslation(ayahs, identifier, direction) {
   const [locale, author] = identifier.split(".");
+  const rtl = direction === "rtl" ? "text-end" : "text-start";
+  const flexReverse = direction === "rtl" ? "flex-row-reverse" : "";
 
   const verses = select(".list-ayahs").children;
   for (let i = 0; i < verses.length; i++) {
-    verses[i].children[1].innerHTML += `<p class="ayah_tr-bn text_bn mb-0">
-            <span class="ayah_number-bn">${ayahs[
+    verses[i].children[1].innerHTML += `
+          <p class="ayah_text mb-1 gap-2 d-flex flex-wrap ${flexReverse}">
+            <span class="border rounded-circle px-1">${ayahs[
               i
             ].numberInSurah.toLocaleString(locale)} </span>
-            ${
-              ayahs[i].text
-            } <small class="text-secondary"><i>${author}</i></small>
+            <span class="${rtl}">
+            ${ayahs[i].text} 
+            </span>
+            <small class="text-secondary"><i>${author}</i></small>
           </p>`;
   }
 }
@@ -436,6 +490,21 @@ select(".sura_header-start_listen").addEventListener("click", (e) => {
 select(".close_audio-playBar").addEventListener("click", () => {
   // stop the player
   player.stop();
+
+  // stop specific ayah
+  select(
+    `.list-ayahs li:nth-child(${player.index + 1}) .ayah-pause`
+  ).classList.add("d-none");
+
+  select(
+    `.list-ayahs li:nth-child(${player.index + 1}) .ayah-play_arrow`
+  ).classList.remove("d-none");
+
+  // remove highlighting bg of ayah
+  select(".list-ayahs").children[this.index].classList.remove("bg-light");
+  select(".playlist_tracks-listItem").children[this.index].classList.remove(
+    "active"
+  );
 
   // hide the audio play bar
   select(".player_controls").classList.add("d-none");
@@ -467,7 +536,7 @@ function readyToPlay(playlist) {
   }
 
   // play the audio
-  player.play();
+  // player.play();
 
   select(".operation_btn-loading").classList.add("d-none");
   select(".operation_btn-play").classList.remove("d-none");
