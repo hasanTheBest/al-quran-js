@@ -392,7 +392,7 @@ function displaySura(sura) {
 function displayAyahs(ayahs, suraNo) {
   const verses = ayahs.map(({ text, numberInSurah }, i) => {
     return `
-    <li class="list-group-item ayah d-flex justify-content-between pt-4" id=${
+    <li class="list-group-item ayah d-flex justify-content-between pt-4 pe-4" id=${
       suraNo + ":" + numberInSurah
     }>
       <div class="ayah_tools d-flex flex-column text-secondary">
@@ -405,7 +405,7 @@ function displayAyahs(ayahs, suraNo) {
         </div>
       </div>
 
-      <div class="ayah_text">
+      <div class="ayah_text flex-grow-1">
         <div class="text-end h2 mb-4">
           <b class="ayah_text-ar text_ar">
           ${

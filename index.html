@@ -23,12 +23,16 @@
     <!-- custom css -->
     <link rel="stylesheet" href="css/app.css" />
   </head>
-  <body>
-    <header class="text-center bg-light sura sticky-top w-100 shadow-sm">
+  <body id="toTop">
+    <header
+      class="text-center bg-light sura sticky-md-top w-100 shadow-sm p-3 p-md-0"
+    >
       <!-- sura navigation -->
-      <div class="sura_nav d-flex justify-content-between gap-2 mx-auto p-2">
+      <div
+        class="sura_nav row-cols-md-4 row-cols-1 d-flex flex-column flex-md-row gap-2 mx-auto p-2"
+      >
         <!-- Index -->
-        <div class="form-floating sura_nav-index">
+        <div class="form-floating sura_nav-index col">
           <select
             class="form-select select_sura-index text_ar"
             id="floatingSelect"
@@ -38,7 +42,7 @@
         </div>
 
         <!-- Ayah -->
-        <div class="form-floating w-25">
+        <div class="form-floating col">
           <select
             class="form-select sura_nav-gotoAyah"
             id="floatingSelectGoToAyah"
@@ -48,7 +52,7 @@
         </div>
 
         <!-- Translation -->
-        <div class="form-floating sura_nav-translation w-50">
+        <div class="form-floating sura_nav-translation col">
           <select
             class="form-select select_sura-translations"
             id="floatingSelect"
@@ -60,7 +64,7 @@
         </div>
 
         <!-- Recitation -->
-        <div class="form-floating sura_nav-recitation w-25">
+        <div class="form-floating sura_nav-recitation col">
           <select
             class="form-select select_sura-recitation text_ar"
             id="floatingSelect"
@@ -73,21 +77,21 @@
       </div>
     </header>
 
-    <main class="mt-0">
+    <main class="mt-0 position-relative">
       <!-- Sura meta info -->
       <div
-        class="sura_header d-flex justify-content-between align-items-center mb-4 bg-light p-4 rounded-bottom shadow-sm"
+        class="sura_header d-flex flex-wrap flex-md-nowrap justify-content-between align-items-center mb-4 bg-light p-4 rounded-bottom shadow-sm"
       >
         <!-- listen sura -->
         <div class="sura_header-start d-flex flex-column">
           <button
-            class="btn btn-outline-primary border-0 sura_header-start_info d-flex align-items-center"
+            class="btn btn-outline-primary ps-0 border-0 sura_header-start_info d-flex align-items-center"
           >
             <i class="material-icons me-2">playlist_play</i>
             <span>Sura Info</span>
           </button>
           <button
-            class="sura_header-start_listen btn border-0 btn-outline-success d-flex align-items-center"
+            class="sura_header-start_listen btn border-0 ps-0 btn-outline-success d-flex align-items-center"
           >
             <i class="material-icons me-2">volume_up</i>
             <span>Listen</span>
@@ -95,7 +99,9 @@
         </div>
 
         <!-- bimillah -->
-        <div class="sura_header-middle">
+        <div
+          class="sura_header-middle order-2 order-md-0 text-center flex-grow-1 mt-4 mt-md-0"
+        >
           <h2
             class="heading-bismillah text-center"
             title="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
@@ -105,16 +111,14 @@
         </div>
 
         <!-- Sura name and info -->
-        <div class="sura_header-end">
+        <div class="sura_header-end flex-grow-1 flex-md-grow-0 text-end">
           <div class="sura_info">
             <h1 class="mb-0">
               <span class="sura_number-ar text_ar"></span>
               <span class="sura_name-ar text_ar"></span>
             </h1>
             <p class="mb-0 text-black-50">
-              <span
-                class="sura_number-en border-2 rounded-circle p-1 border-dark"
-              ></span>
+              <span class="sura_number-en px-2 rounded-circle border"></span>
               <span class="sura_name-en"></span>,
               <span class="sura_name-tr_en"></span>
             </p>
@@ -124,11 +128,18 @@
 
       <!-- Display Ayahs -->
       <ul class="list-group list-group-flush list-ayahs"></ul>
+      <a
+        href="#toTop"
+        class="btn btn-small position-absolute start-100 btn-outline-success"
+        title="Go to Top"
+      >
+        <span class="material-icons"> keyboard_double_arrow_up </span>
+      </a>
     </main>
 
     <!-- audio bar -->
     <section
-      class="player_controls d-flex justify-content-center align-items-center align-items-end p-1 bg-light position-sticky bottom-0 d-none shadow-sm"
+      class="player_controls d-flex justify-content-center align-items-center align-items-end py-1 px-3 bg-light position-sticky bottom-0 d-none shadow-sm"
     >
       <!-- playlist button -->
       <div class="player_controls-playlist position-relative">
@@ -138,7 +149,7 @@
 
         <!-- playlist track -->
         <div
-          class="playlist_tracks position-absolute bottom-0 start-0 bg-light p-3 d-none mb-5 overflow-scroll shadow rounded-top"
+          class="playlist_tracks position-absolute bottom-0 start-0 bg-light p-3 d-none mb-5 shadow rounded-top"
           style="width: 300px"
         >
           <h5 class="playlist_tracks-name text-center mb-3 text-secondary"></h5>

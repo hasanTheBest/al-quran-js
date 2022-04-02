@@ -43,7 +43,15 @@ main {
   margin: 2rem auto;
 }
 
-// ayah
-.ayah_text {
-  flex-grow: 1;
+// player_controls
+.player_controls{
+  z-index: 5000;
 }
+
+// playlist tracks
+.playlist_tracks{
+  max-height: calc(100vh - 3rem);
+  overflow-y: scroll;
+}
+
+

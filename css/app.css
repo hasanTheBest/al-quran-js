@@ -39,9 +39,12 @@ main {
   margin: 2rem auto;
 }
 
-.ayah_text {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+.player_controls {
+  z-index: 5000;
+}
+
+.playlist_tracks {
+  max-height: calc(100vh - 3rem);
+  overflow-y: scroll;
 }
 /*# sourceMappingURL=app.css.map */
