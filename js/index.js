@@ -89,7 +89,7 @@ class Player {
       select(".operation_btn-loading").classList.add("d-none");
     }
 
-    // set currenty playing index
+    // set currently playing index
     this.index = index;
   }
 
@@ -138,6 +138,9 @@ class Player {
         `.list-ayahs li:nth-child(${this.index + 1}) .ayah-play_arrow`
       ).classList.remove("d-none");
     }
+
+    // goto scroll
+    scrollToElement(id);
 
     this.play(id, stop);
   }
@@ -628,6 +631,21 @@ function prevNextPlaylist(id) {
 
   // 2. load audios
   loadAudios(id, select(".select_sura-recitation").value);
+}
+
+select(".sura_nav-gotoAyah").addEventListener("change", (e) => {
+  const index = parseInt(e.target.value);
+  scrollToElement(index === 1 ? index : index - 1);
+});
+
+// scrollToElement
+function scrollToElement(id) {
+  const offset = select(`.list-ayahs li:nth-child(${id})`).offsetTop;
+
+  window.scrollTo({
+    top: offset,
+    behavior: "smooth",
+  });
 }
 
 // ======== Utilities =======
