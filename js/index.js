@@ -635,6 +635,7 @@ function prevNextPlaylist(id) {
 
 select(".sura_nav-gotoAyah").addEventListener("change", (e) => {
   const index = parseInt(e.target.value);
+  // scrollToElement(index === 1 ? index : index - 1);
   scrollToElement(index === 1 ? index : index - 1);
 });
 
